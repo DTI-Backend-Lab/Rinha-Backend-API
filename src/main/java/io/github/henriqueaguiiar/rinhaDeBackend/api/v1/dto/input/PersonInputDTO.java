@@ -17,10 +17,10 @@ public class PersonInputDTO {
 
     private String surName;
     private String name;
-    private LocalDate bornDate;
+    private String bornDate;
     private List<String> stack;
 
-    public PersonInputDTO(String surName, String name, LocalDate bornDate, List<String> stack) {
+    public PersonInputDTO(String surName, String name, String bornDate, List<String> stack) {
         this.surName = surName;
         this.name = name;
         this.bornDate = bornDate;
@@ -43,11 +43,11 @@ public class PersonInputDTO {
         this.name = name;
     }
 
-    public LocalDate getBornDate() {
+    public String getBornDate() {
         return bornDate;
     }
 
-    public void setBornDate(LocalDate bornDate) {
+    public void setBornDate(String bornDate) {
         this.bornDate = bornDate;
     }
 

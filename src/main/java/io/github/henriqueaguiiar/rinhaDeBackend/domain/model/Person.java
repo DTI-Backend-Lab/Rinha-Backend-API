@@ -21,7 +21,7 @@ public class Person implements Serializable {
     @Column(name = "name")
     private String name;
     @Column(name = "bornDate")
-    private LocalDate bornDate;
+    private String bornDate;
     @Column(name = "stack")
     private List<String> stack;
 
@@ -29,7 +29,7 @@ public class Person implements Serializable {
     public Person() {
     }
 
-    public Person(String surName, String name, LocalDate bornDate, List<String>  stack) {
+    public Person(String surName, String name, String bornDate, List<String>  stack) {
         this.surName = surName;
         this.name = name;
         this.bornDate = bornDate;
@@ -60,11 +60,11 @@ public class Person implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getBornDate() {
+    public String getBornDate() {
         return bornDate;
     }
 
-    public void setBornDate(LocalDate bornDate) {
+    public void setBornDate(String bornDate) {
         this.bornDate = bornDate;
     }
 

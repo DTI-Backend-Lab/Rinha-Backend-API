@@ -10,11 +10,15 @@ import io.github.henriqueaguiiar.rinhaDeBackend.domain.repository.PersonReposito
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.service.PersonService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PersonServiceImpl implements PersonService {
+    private static final DateTimeFormatter BIRTHDATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private final PersonRepository personRepository;
 
@@ -84,5 +88,14 @@ public class PersonServiceImpl implements PersonService {
                 }
             }
         }
+
+        try {
+            LocalDate.parse(personInputDTO.getBornDate(), BIRTHDATE_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new CreatePersonException("A data de nascimento deve estar no formato AAAA-MM-DD");
+        }
+
+
+
     }
 }

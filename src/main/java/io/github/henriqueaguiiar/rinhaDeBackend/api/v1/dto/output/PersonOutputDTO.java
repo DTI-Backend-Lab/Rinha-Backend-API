@@ -23,7 +23,7 @@ public class PersonOutputDTO {
     private String id;
     private String surName;
     private String name;
-    private LocalDate bornDate;
+    private String bornDate;
     private List<String> stack;
 
 
@@ -59,11 +59,11 @@ public class PersonOutputDTO {
         this.name = name;
     }
 
-    public LocalDate getBornDate() {
+    public String getBornDate() {
         return bornDate;
     }
 
-    public void setBornDate(LocalDate bornDate) {
+    public void setBornDate(String bornDate) {
         this.bornDate = bornDate;
     }
 
