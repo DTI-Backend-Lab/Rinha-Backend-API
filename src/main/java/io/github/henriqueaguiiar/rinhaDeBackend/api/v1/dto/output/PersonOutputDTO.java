@@ -1,6 +1,7 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output;
 
 import com.github.f4b6a3.uuid.UuidCreator;
+import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 public class PersonOutputDTO {
 
-    @id
+    @Id
     private String id;
     private String surName;
     private String name;

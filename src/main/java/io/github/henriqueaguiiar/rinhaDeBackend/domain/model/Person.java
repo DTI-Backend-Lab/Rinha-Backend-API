@@ -1,6 +1,7 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.domain.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class Person implements Serializable {
     private static final long serialVersionUUID = 1L;
 
-    @id
+    @Id
     private String id;
     private String surName;
     private String name;
@@ -22,7 +23,10 @@ public class Person implements Serializable {
     private List<String> stack;
 
 
-    public Person(UUID id, String surName, String name, LocalDate bornDate, List<String>  stack) {
+    public Person() {
+    }
+
+    public Person(String id, String surName, String name, LocalDate bornDate, List<String>  stack) {
         this.id = id;
         this.surName = surName;
         this.name = name;
@@ -30,7 +34,7 @@ public class Person implements Serializable {
         this.stack = stack;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
