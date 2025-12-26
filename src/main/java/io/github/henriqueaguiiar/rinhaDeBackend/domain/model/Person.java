@@ -1,5 +1,6 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.domain.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -16,10 +17,15 @@ public class Person implements Serializable {
     private static final long serialVersionUUID = 1L;
 
     @Id
+    @Column(name = "id")
     private String id;
+    @Column(name = "surName")
     private String surName;
+    @Column(name = "name")
     private String name;
+    @Column(name = "bornDate")
     private LocalDate bornDate;
+    @Column(name = "stack")
     private List<String> stack;
 
 

@@ -1,0 +1,9 @@
+package io.github.henriqueaguiiar.rinhaDeBackend.domain.repository;
+
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Person;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PersonRepository extends JpaRepository<String, Person> {
+}
