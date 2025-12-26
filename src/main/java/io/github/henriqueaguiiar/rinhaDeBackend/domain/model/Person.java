@@ -8,6 +8,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+
+/**
+ * Entidade Person
+ * @author Henrique Pacheo
+ * @version 1.0.0
+ */
+
+
+
 @Entity()
 @Table(name = "tb_person")
 public class Person implements Serializable {
