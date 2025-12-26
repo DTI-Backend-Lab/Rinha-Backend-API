@@ -16,6 +16,12 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service responsavel por realizar as operações dos endpoints de Person. Evitando Expor Repository
+ * @author Henrique Pacheco
+ * @version 1.0.0
+ */
+
 @Service
 public class PersonServiceImpl implements PersonService {
     private static final DateTimeFormatter BIRTHDATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -62,7 +68,17 @@ public class PersonServiceImpl implements PersonService {
         Person person = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException("Pessoa Não Encontrada com este Id"));
         return PersonMapper.toOutputDTO(person);
     }
-
+    /**
+     *Metodo para validar o input de dados para POST/Criação de Recurso.
+     *
+     * Validações:
+     * apelido:	obrigatório, único, string de até 32 caracteres.
+     * nome:obrigatório, string de até 100 caracteres.
+     * nascimento:	obrigatório, string para data no formato AAAA-MM-DD (ano, mês, dia).
+     * stack:	opcional, vetor de string com cada elemento sendo obrigatório e de até 32 caracteres.
+     * @param personInputDTO
+     *
+     */
 
     @Override
     public void  validateInputPerson(PersonInputDTO personInputDTO){

@@ -12,6 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller para expor os recursos de Person
+ * @author Henrique Pacheco
+ * @version 1.0.0
+ */
+
+
+
 @RestController
 @RequestMapping("/api/v1/person")
 public class PersonController {

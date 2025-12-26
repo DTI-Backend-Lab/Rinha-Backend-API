@@ -5,6 +5,11 @@ import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.PersonOutputDT
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+/**
+ * Service responsavel por realizar as operações dos endpoints de Person. Evitando Expor Repository
+ * @author Henrique Pacheco
+ * @version 1.0.0
+ */
 
 @Service
 public interface PersonService {
