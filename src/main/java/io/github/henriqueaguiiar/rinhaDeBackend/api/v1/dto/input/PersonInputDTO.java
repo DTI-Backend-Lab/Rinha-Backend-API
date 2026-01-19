@@ -25,4 +25,13 @@ public class PersonInputDTO {
     private String bornDate;
     private List<String> stack;
 
+    @Override
+    public String toString() {
+        return "PersonInputDTO{" +
+                "surName='" + surName + '\'' +
+                ", name='" + name + '\'' +
+                ", bornDate='" + bornDate + '\'' +
+                ", stack=" + stack +
+                '}';
+    }
 }

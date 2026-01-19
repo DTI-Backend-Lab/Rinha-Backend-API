@@ -31,6 +31,15 @@ public class PersonOutputDTO {
     private String bornDate;
     private List<String> stack;
 
-
+    @Override
+    public String toString() {
+        return "PersonOutputDTO{" +
+                "id='" + id + '\'' +
+                ", surName='" + surName + '\'' +
+                ", name='" + name + '\'' +
+                ", bornDate='" + bornDate + '\'' +
+                ", stack=" + stack +
+                '}';
+    }
 }
 
