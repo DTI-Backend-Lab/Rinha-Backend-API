@@ -7,6 +7,7 @@ import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.PersonOutputDT
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Person;
 import org.springframework.stereotype.Component;
 
+
 public class PersonMapper {
 
     public static Person  toEntity(PersonInputDTO personInputDTO){
