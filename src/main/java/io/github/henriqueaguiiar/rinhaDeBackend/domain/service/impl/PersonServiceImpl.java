@@ -75,6 +75,53 @@ public class PersonServiceImpl implements PersonService {
         log.info("Recuperando pessoa com o ID: {}. {}", id, person);
         return personMapper.toOutputDTO(person);
     }
+
+    @Override
+    public PersonOutputDTO atualizarPerson(PersonInputDTO personInputDTO, String id) {
+        Person person = personMapper.toEntity(personInputDTO);
+
+        Person personExist = personRepository.findById(person.getId()).orElseThrow(()-> new PersonNotFoundException("Pessoa Não Encontrada com este Id"));
+        personExist.setName(person.getName());
+        personExist.setSurName(person.getSurName());
+        personExist.setBornDate(person.getBornDate());
+        personExist.setStack(person.getStack());
+        personRepository.save(personExist);
+        log.info("Atualizando pessoa com o ID: {}. {}", id, personExist);
+        return personMapper.toOutputDTO(personExist);
+    }
+
+
+    @Override
+    public PersonOutputDTO atualizarItemPerson(String id, PersonInputDTO personInputDTO) {
+        Person personExist = personRepository.findById(id).orElseThrow(()-> new PersonNotFoundException("Pessoa Não Encontrada com este Id"));
+
+        if(personInputDTO.getName() != null){
+            personExist.setName(personInputDTO.getName());
+        }
+        if(personInputDTO.getSurName() != null){
+            personExist.setSurName(personInputDTO.getSurName());
+        }
+
+        if(personInputDTO.getBornDate() != null){
+            personExist.setBornDate(personInputDTO.getBornDate());
+        }
+
+        if(personInputDTO.getStack() != null){
+            personExist.setStack(personInputDTO.getStack());
+        }
+
+        personRepository.save(personExist);
+        log.info("Atualizando pessoa com o ID: {}. {}", id, personExist);
+        return personMapper.toOutputDTO(personExist);
+    }
+
+    @Override
+    public void deletarPerson(String id) {
+        Person person = personRepository.findById(id).orElseThrow(()-> new PersonNotFoundException("Pessoa Não Encontrada com este Id"));
+        personRepository.delete(person);
+        log.info("Deletando pessoa com o ID: {}. {}", id, person);
+    }
+
     /**
      *Metodo para validar o input de dados para POST/Criação de Recurso.
      *
@@ -86,7 +133,6 @@ public class PersonServiceImpl implements PersonService {
      * @param personInputDTO
      *
      */
-
     @Override
     public void  validateInputPerson(PersonInputDTO personInputDTO){
 
