@@ -1,4 +1,4 @@
-# 🏆 MENTORIA BACKEND - JAVA
+# BACKEND - JAVA - CRUD PESSOAS
 
 ## Resumo
 
@@ -9,12 +9,15 @@
 
 ## Endpoints
 
-As APIs precisam expor 3 (4, na verdade) endpoints:
+As APIs precisam expor 7 endpoints e ter os principais que formam um CRUD completo:
 
 - `POST /pessoas` – para criar um recurso pessoa.
 - `GET /pessoas/[:id]` – para consultar um recurso criado com a requisição anterior.
 - `GET /pessoas?t=[:termo da busca]` – para fazer uma busca por pessoas.
 - `GET /contagem-pessoas` – endpoint especial para contagem de pessoas cadastradas.
+- `PUT /pessoas/[:id]` – endpoint para atualizar pessoas cadastradas.
+- `PATCH /pessoas/[:id]` – endpoint para atualizar atributo de pessoas cadastradas.
+- `DELETE /pessoas/[:id]` – endpoint  para deletar registro de pessoas cadastradas.
 
 ### Criação de Pessoas
 
