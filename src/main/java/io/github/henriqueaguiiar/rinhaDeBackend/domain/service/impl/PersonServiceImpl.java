@@ -80,7 +80,7 @@ public class PersonServiceImpl implements PersonService {
     public PersonOutputDTO atualizarPerson(PersonInputDTO personInputDTO, String id) {
         Person person = personMapper.toEntity(personInputDTO);
 
-        Person personExist = personRepository.findById(person.getId()).orElseThrow(()-> new PersonNotFoundException("Pessoa Não Encontrada com este Id"));
+        Person personExist = personRepository.findById(id).orElseThrow(()-> new PersonNotFoundException("Pessoa Não Encontrada com este Id"));
         personExist.setName(person.getName());
         personExist.setSurName(person.getSurName());
         personExist.setBornDate(person.getBornDate());
