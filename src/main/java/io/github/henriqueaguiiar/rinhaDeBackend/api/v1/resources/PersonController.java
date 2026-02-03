@@ -3,8 +3,6 @@ package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.resources;
 
 import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input.PersonInputDTO;
 import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.PersonOutputDTO;
-import io.github.henriqueaguiiar.rinhaDeBackend.domain.exception.CreatePersonException;
-import io.github.henriqueaguiiar.rinhaDeBackend.domain.exception.PersonNotFoundException;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.service.PersonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -40,14 +38,9 @@ public class PersonController {
     @ApiResponse(responseCode = "201", description = "Pessoa criada com sucesso.")
     @ApiResponse(responseCode = "400", description = "Requisição inválida ao criar Pessoa.")
     public ResponseEntity<?> createPerson(@RequestBody PersonInputDTO personInputDTO){
-       try{
-           var person =  personService.createPerson(personInputDTO);
-           log.info(">>createPerson Person Criada com sucesso!: " + person);
-           return ResponseEntity.status(HttpStatus.CREATED).body(person);
-       }catch (CreatePersonException e){
-           log.warn(">>createPerson Erro ao realizar a criação da Person: " + HttpStatus.BAD_REQUEST + "Erro: " + e.getMessage());
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-       }
+        var person =  personService.createPerson(personInputDTO);
+        log.info(">>createPerson Person Criada com sucesso!: " + person);
+        return ResponseEntity.status(HttpStatus.CREATED).body(person);
     }
 
     @GetMapping("/{id}")
@@ -55,12 +48,8 @@ public class PersonController {
     @ApiResponse(responseCode = "200", description = "Pessoa obtida com sucesso.")
     @ApiResponse(responseCode = "400", description = "Pessoa não encontrada para o ID")
     public ResponseEntity<?> getPersonbyId(@PathVariable String id){
-        try{
-            var person = personService.getPersonById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(person);
-        } catch (PersonNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        var person = personService.getPersonById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(person);
     }
 
     @GetMapping

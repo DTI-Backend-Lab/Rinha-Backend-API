@@ -3,6 +3,8 @@ package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,10 +25,13 @@ import java.util.Objects;
 public class PersonInputDTO {
 
     @Schema(example = "Aguiar", description = "Sobrenome da pessoa.", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank
     private String surName;
     @Schema(example = "Henrique", description = "Nome da pessoa.", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank
     private String name;
     @Schema(example = "1995-08-15", description = "Data de nascimento da pessoa.", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull
     private String bornDate;
     @Schema(example = "[\"Java\",\"Spring Boot\",\"Docker\"]", description = "Lista de tecnologias que a pessoa domina.", requiredMode = Schema.RequiredMode.REQUIRED)
     private List<String> stack;
