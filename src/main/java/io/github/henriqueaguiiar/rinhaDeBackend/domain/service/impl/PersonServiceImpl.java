@@ -8,6 +8,7 @@ import io.github.henriqueaguiiar.rinhaDeBackend.domain.mapper.PersonMapper;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Person;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.repository.PersonRepository;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.service.PersonService;
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.service.validation.ValidateInputPersonStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,20 +21,21 @@ import java.util.List;
 /**
  * Service responsavel por realizar as operações dos endpoints de Person. Evitando Expor Repository
  * @author Henrique Pacheco
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 @Service
 @Slf4j
 public class PersonServiceImpl implements PersonService {
-    private static final DateTimeFormatter BIRTHDATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
+    private final List<ValidateInputPersonStrategy> validateInputPersonStrategies;
 
-    public PersonServiceImpl(PersonRepository personRepository, PersonMapper personMapper) {
+    public PersonServiceImpl(PersonRepository personRepository, PersonMapper personMapper, List<ValidateInputPersonStrategy> validateInputPersonStrategies) {
         this.personRepository = personRepository;
         this.personMapper = personMapper;
+        this.validateInputPersonStrategies = validateInputPersonStrategies;
     }
 
     @Override
@@ -122,64 +124,22 @@ public class PersonServiceImpl implements PersonService {
         log.info("Deletando pessoa com o ID: {}. {}", id, person);
     }
 
-    /**
-     *Metodo para validar o input de dados para POST/Criação de Recurso.
-     *
-     * Validações:
-     * apelido:	obrigatório, único, string de até 32 caracteres.
-     * Nome: obrigatório, string de até 100 caracteres.
-     * Nascimento:	obrigatório, string para data no formato AAAA-MM-DD (ano, mês, dia).
-     * Stack:	opcional, vetor de string com cada elemento sendo obrigatório e de até 32 caracteres.
-     * @param personInputDTO
-     *
-     */
-    @Override
-    public void  validateInputPerson(PersonInputDTO personInputDTO){
-
-        if(personInputDTO.getSurName() == null || personInputDTO.getSurName().isBlank()){
-            log.error("O campos sobrenome está vazio ou nulo {}", personInputDTO.getSurName());
-            throw new CreatePersonException("O preenchimento do sobrenome é Obrigatorio");
-        }
-
-        if (personInputDTO.getSurName().length() > 32) {
-            log.error("O limite máximo do sobrenome é 32 caracteres {}", personInputDTO.getSurName().length());
-            throw new CreatePersonException("O limite máximo do sobrenome é 32 caracteres");
-        }
-
-
-        if(personInputDTO.getName() == null || personInputDTO.getName().isBlank()){
-            log.error("O campos nome está vazio ou nulo {}", personInputDTO.getName());
-            throw new CreatePersonException("O preenchimento do nome é Obrigatorio");
-        }
-
-
-        if (personInputDTO.getName().length() > 100) {
-            log.error("O limite máximo do nome é 100 caracteres {}", personInputDTO.getName().length());
-            throw new CreatePersonException("O limite máximo do nome é 100 caracteres");
-        }
-
-
-        if (personInputDTO.getStack() != null) {
-            for (String stackItem : personInputDTO.getStack()) {
-                if (stackItem == null || stackItem.length() > 32) {
-                    log.error("Limite máximo de até 32 caracteres por item na Stack {}", stackItem);
-                    throw new CreatePersonException("Limite máximo de até 32 caracteres por item na Stack");
-                }
-            }
-        }
-
-        try {
-            LocalDate.parse(personInputDTO.getBornDate(), BIRTHDATE_FORMATTER);
-        } catch (DateTimeParseException e) {
-            log.error("A data de nascimento deve estar no formato AAAA-MM-DD {}", personInputDTO.getBornDate());
-            throw new CreatePersonException("A data de nascimento deve estar no formato AAAA-MM-DD");
-        }
-    }
-
     @Override
     public Integer contagemPessoas() {
         List<PersonOutputDTO> allPerson = getAllPerson();
         log.info("Contagem total de pessoas: {}", allPerson.size());
         return allPerson.size();
+    }
+    /**
+     *Metodo para validar o input de DTO para POST/Criação de Recurso Person utilizando Patter Strategy .
+     *Classes de validação dentro do package validation
+     * @param personInputDTO
+     *
+     */
+    @Override
+    public void  validateInputPerson(PersonInputDTO personInputDTO){
+        for(ValidateInputPersonStrategy strategy : validateInputPersonStrategies){
+            strategy.validateInputPerson(personInputDTO);
+        }
     }
 }
