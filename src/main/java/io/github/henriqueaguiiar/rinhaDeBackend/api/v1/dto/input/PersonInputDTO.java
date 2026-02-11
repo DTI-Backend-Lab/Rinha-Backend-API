@@ -1,6 +1,7 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input;
 
 
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Stack;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Henrique Pacheco
@@ -34,7 +36,7 @@ public class PersonInputDTO {
     @NotNull
     private String bornDate;
     @Schema(example = "[\"Java\",\"Spring Boot\",\"Docker\"]", description = "Lista de tecnologias que a pessoa domina.", requiredMode = Schema.RequiredMode.REQUIRED)
-    private List<String> stack;
+    private Set<Stack> stack;
 
     @Override
     public String toString() {
