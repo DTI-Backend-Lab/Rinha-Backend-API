@@ -2,21 +2,20 @@ package io.github.henriqueaguiiar.rinhaDeBackend.domain.service.impl;
 
 import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input.PersonInputDTO;
 import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.PersonOutputDTO;
-import io.github.henriqueaguiiar.rinhaDeBackend.domain.exception.CreatePersonException;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.exception.PersonNotFoundException;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.mapper.PersonMapper;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Person;
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Stack;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.repository.PersonRepository;
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.repository.StackRepository;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.service.PersonService;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.service.validation.ValidateInputPersonStrategy;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.text.html.Option;
+import java.util.*;
 
 /**
  * Service responsavel por realizar as operações dos endpoints de Person. Evitando Expor Repository
@@ -28,25 +27,39 @@ import java.util.List;
 @Slf4j
 public class PersonServiceImpl implements PersonService {
 
+
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
     private final List<ValidateInputPersonStrategy> validateInputPersonStrategies;
+    private final StackRepository stackRepository;
 
-    public PersonServiceImpl(PersonRepository personRepository, PersonMapper personMapper, List<ValidateInputPersonStrategy> validateInputPersonStrategies) {
+    public PersonServiceImpl(PersonRepository personRepository, PersonMapper personMapper, List<ValidateInputPersonStrategy> validateInputPersonStrategies, StackRepository stackRepository) {
         this.personRepository = personRepository;
         this.personMapper = personMapper;
         this.validateInputPersonStrategies = validateInputPersonStrategies;
+        this.stackRepository = stackRepository;
     }
 
     @Override
     public PersonOutputDTO createPerson(PersonInputDTO personInputDTO) {
             validateInputPerson(personInputDTO);
+
+            Set<Stack> stackSet = new HashSet<>();
+            if(personInputDTO.getStack() != null) {
+                for(Stack stackItem : personInputDTO.getStack()) {
+                    Optional<Stack> existingStack = stackRepository.findByNameIgnoreCase(stackItem.getName());
+                    Stack stack = existingStack.orElseGet(() -> stackRepository.save(new Stack(null, stackItem.getName().toUpperCase())));
+                    stackSet.add(stack);
+                }
+            }
+
             var personDatabase =  personMapper.toEntity(personInputDTO);
+            personDatabase.setStack(stackSet);
+
             log.info("Salvando nova pessoa. ID: {}", personDatabase.getId());
             personRepository.save(personDatabase);
             return personMapper.toOutputDTO(personDatabase);
     }
-
 
     @Override
     public List<PersonOutputDTO> getAllPerson(){
@@ -78,38 +91,60 @@ public class PersonServiceImpl implements PersonService {
         return personMapper.toOutputDTO(person);
     }
 
-    @Override
     public PersonOutputDTO atualizarPerson(PersonInputDTO personInputDTO, String id) {
         Person person = personMapper.toEntity(personInputDTO);
 
         Person personExist = personRepository.findById(id).orElseThrow(()-> new PersonNotFoundException("Pessoa Não Encontrada com este Id"));
+
+        for(ValidateInputPersonStrategy strategy : validateInputPersonStrategies){
+            strategy.validateInputPerson(personInputDTO);}
+
         personExist.setName(person.getName());
         personExist.setSurName(person.getSurName());
         personExist.setBornDate(person.getBornDate());
-        personExist.setStack(person.getStack());
+
+        Set<Stack>stackSet = new HashSet<>();
+        if (personInputDTO.getStack() != null) {
+            for (Stack stackItem : personInputDTO.getStack()) {
+                Optional<Stack> existingStack = stackRepository.findByNameIgnoreCase(stackItem.getName());
+                Stack stack = existingStack.orElseGet(() -> stackRepository.save(new Stack(null, stackItem.getName().toUpperCase())));
+                stackSet.add(stack);
+            }
+            personExist.setStack(stackSet);
+        }
+
         personRepository.save(personExist);
         log.info("Atualizando pessoa com o ID: {}. {}", id, personExist);
         return personMapper.toOutputDTO(personExist);
     }
 
-
     @Override
     public PersonOutputDTO atualizarItemPerson(String id, PersonInputDTO personInputDTO) {
         Person personExist = personRepository.findById(id).orElseThrow(()-> new PersonNotFoundException("Pessoa Não Encontrada com este Id"));
 
-        if(personInputDTO.getName() != null){
+        for(ValidateInputPersonStrategy strategy : validateInputPersonStrategies){
+            strategy.validateInputPerson(personInputDTO);
+        }
+        if(personInputDTO.getName() != null) {
             personExist.setName(personInputDTO.getName());
         }
-        if(personInputDTO.getSurName() != null){
+
+        if(personInputDTO.getSurName() != null) {
             personExist.setSurName(personInputDTO.getSurName());
         }
 
-        if(personInputDTO.getBornDate() != null){
+        if(personInputDTO.getBornDate() != null) {
             personExist.setBornDate(personInputDTO.getBornDate());
         }
 
-        if(personInputDTO.getStack() != null){
-            personExist.setStack(personInputDTO.getStack());
+        if (personInputDTO.getStack() != null) {
+            Set<Stack> stackSet = new HashSet<>();
+            for (Stack stackItem : personInputDTO.getStack()) {
+                Optional<Stack> existingStack = stackRepository.findByNameIgnoreCase(stackItem.getName());
+                Stack stack = existingStack.orElseGet(() -> stackRepository.save(new Stack(null, stackItem.getName().toUpperCase())));
+                stackSet.add(stack);
+            }
+            personExist.setStack(stackSet);
         }
 
         personRepository.save(personExist);

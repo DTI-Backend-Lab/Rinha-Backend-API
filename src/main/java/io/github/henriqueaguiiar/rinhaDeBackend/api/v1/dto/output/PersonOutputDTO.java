@@ -1,6 +1,7 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output;
 
 
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Stack;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.AllArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 
 import java.util.List;
-
+import java.util.Set;
 
 
 /**
@@ -35,7 +36,7 @@ public class PersonOutputDTO {
     @Schema( example = "1995-08-15", description = "Data de nascimento da pessoa.")
     private String bornDate;
     @Schema(example = "[\"Java\",\"Spring Boot\",\"Docker\"]", description = "Lista de tecnologias que a pessoa domina.")
-    private List<String> stack;
+    private Set<Stack> stack;
 
     @Override
     public String toString() {

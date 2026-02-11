@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -25,7 +23,7 @@ import java.util.UUID;
 @Entity()
 @Table(name = "tb_person")
 public class Person implements Serializable {
-    private static final long serialVersionUUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "id")
@@ -36,10 +34,11 @@ public class Person implements Serializable {
     private String name;
     @Column(name = "bornDate")
     private String bornDate;
-    @Column(name = "stack")
-    @ElementCollection
-    private List<String> stack;
-
+    @ManyToMany
+    @JoinTable(name = "person_Stack", joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "stack_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"person_id", "stack_id"}))
+    private Set<Stack> stack = new HashSet<>();
 
     @Override
     public String toString() {
