@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PersonMapper {
 
-    public Person  toEntity(PersonInputDTO personInputDTO){
+    public Person toEntity(PersonInputDTO personInputDTO){
         Person person = new Person();
         person.setId(UuidCreator.getTimeOrderedEpoch().toString());
         person.setSurName(personInputDTO.getSurName());
