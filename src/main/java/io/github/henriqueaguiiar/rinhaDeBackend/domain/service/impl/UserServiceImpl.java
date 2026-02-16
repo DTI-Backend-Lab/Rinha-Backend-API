@@ -3,10 +3,11 @@ package io.github.henriqueaguiiar.rinhaDeBackend.domain.service.impl;
 import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input.UserInputDTO;
 import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.UserOutputDTO;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.mapper.UserMapper;
-import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.User;
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Users;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.repository.UserRepository;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,18 +24,15 @@ public class UserServiceImpl implements UserService {
         if(getUserByLogin(userInputDTO.getUsername()) != null){
             throw new RuntimeException("Usuario com este username ja existe");
         }
-            User user = userMapper.toEntity(userInputDTO);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-            return userMapper.toOutputDTO(user);
+            Users users = userMapper.toEntity(userInputDTO);
+            users.setPassword(passwordEncoder.encode(users.getPassword()));
+            userRepository.save(users);
+            return userMapper.toOutputDTO(users);
     }
 
     @Override
-    public UserOutputDTO getUserByLogin(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            return null;
-        }
-        return userMapper.toOutputDTO(user);
+    public UserDetails getUserByLogin(String username) {
+        var users = userRepository.findByUsername(username);
+        return users;
     }
 }

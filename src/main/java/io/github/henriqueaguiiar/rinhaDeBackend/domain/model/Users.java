@@ -25,7 +25,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(of = "id")
-public class User implements Serializable, UserDetails {
+public class Users implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -58,22 +58,22 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 
 }

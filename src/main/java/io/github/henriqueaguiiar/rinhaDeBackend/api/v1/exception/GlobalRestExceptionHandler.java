@@ -35,6 +35,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
     }
 
+
     public ResponseEntity<ErrorResponseDTO> handdleGenericException(Exception exception, HttpServletRequest request) {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
                 HttpStatus.INTERNAL_SERVER_ERROR,
@@ -44,6 +45,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDTO);
     }
+
 
     public ResponseEntity<ErrorResponseDTO> handleRuntimeException(RuntimeException exception, HttpServletRequest request) {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
