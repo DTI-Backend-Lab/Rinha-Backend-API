@@ -26,14 +26,18 @@ public class SecurityConfiguration {
         try {
             return http
                     .csrf(csrf -> csrf.disable())
+                    .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authorizeHttpRequests(auth -> auth
+                            .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                            .requestMatchers("/h2-console/**").permitAll()
                             .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-                            //.requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll() // Adicionado apenas para testes, deve ser protegido em produção
+                            .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll() // Adicionado apenas para testes, deve ser protegido em produção
                             .requestMatchers(HttpMethod.POST, "/api/v1/person**").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.PUT,"/api/v1/person/**").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.PATCH, "/api/v1/person/**").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.DELETE,"/api/v1/person/**").hasRole("ADMIN")
+
                             .anyRequest().authenticated())
                     .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                     .build();
