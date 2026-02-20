@@ -1,9 +1,10 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.exception;
 
 
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.ErrorResponseDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.response.ErrorResponseDTO;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.exception.CreatePersonException;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.exception.PersonNotFoundException;
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.exception.UserException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,18 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
     }
 
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<ErrorResponseDTO> handdleGenericException(UserException exception, HttpServletRequest request) {
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                exception.getMessage(),
+                request.getRequestURI(),
+                Instant.now()
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDTO);
+    }
 
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handdleGenericException(Exception exception, HttpServletRequest request) {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
                 HttpStatus.INTERNAL_SERVER_ERROR,
@@ -46,7 +58,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDTO);
     }
 
-
+    @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponseDTO> handleRuntimeException(RuntimeException exception, HttpServletRequest request) {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
                 HttpStatus.INTERNAL_SERVER_ERROR,

@@ -1,4 +1,4 @@
-package io.github.henriqueaguiiar.rinhaDeBackend.domain.util;
+package io.github.henriqueaguiiar.rinhaDeBackend.domain.util.enums;
 
 public enum UserRole {
     ADMIN("Admin"),

@@ -1,7 +1,7 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.domain.service;
 
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input.PersonInputDTO;
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.PersonOutputDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.request.PersonInputDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.response.PersonOutputDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output;
+package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.response;
 
 
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Stack;
@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-import java.util.List;
 import java.util.Set;
 
 

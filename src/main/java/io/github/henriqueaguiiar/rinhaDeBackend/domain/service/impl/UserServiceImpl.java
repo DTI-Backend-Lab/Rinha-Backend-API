@@ -1,7 +1,7 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.domain.service.impl;
 
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input.UserInputDTO;
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.UserOutputDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.request.UserInputDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.response.UserOutputDTO;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.mapper.UserMapper;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Users;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.repository.UserRepository;

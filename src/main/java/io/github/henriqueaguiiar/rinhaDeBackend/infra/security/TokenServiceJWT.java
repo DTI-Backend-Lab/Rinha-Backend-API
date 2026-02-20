@@ -5,13 +5,10 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.util.constants.DataConstants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 @Service
 public class TokenServiceJWT {
@@ -29,7 +26,7 @@ public class TokenServiceJWT {
             return JWT.create()
                     .withIssuer("rinhaDeBackend")
                     .withSubject(userDetails.getUsername())
-                    .withExpiresAt(generateExpirationDate())
+                    .withExpiresAt(DataConstants.DATA_EXPIRACAO_TOKEN_JWT)
                     .sign(algorithm);
         }catch (JWTCreationException exception){
             throw new RuntimeException("Erro ao gerar token JWT", exception);
@@ -54,13 +51,6 @@ public class TokenServiceJWT {
         }
     }
 
-    /**
-     * Metodo que gera a data de expiração do token JWT, nesse caso o token expira em 2 horas
-     * @return
-     */
 
-    private Instant generateExpirationDate(){
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
-    }
 
 }

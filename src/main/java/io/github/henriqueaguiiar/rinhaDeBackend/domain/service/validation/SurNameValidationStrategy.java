@@ -1,7 +1,7 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.domain.service.validation;
 
 
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input.PersonInputDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.request.PersonInputDTO;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.exception.CreatePersonException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.domain.model;
 
-import io.github.henriqueaguiiar.rinhaDeBackend.domain.util.UserRole;
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.util.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

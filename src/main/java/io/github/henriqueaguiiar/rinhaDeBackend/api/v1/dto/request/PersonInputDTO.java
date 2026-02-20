@@ -1,18 +1,14 @@
-package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input;
+package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.request;
 
 
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Stack;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 /**

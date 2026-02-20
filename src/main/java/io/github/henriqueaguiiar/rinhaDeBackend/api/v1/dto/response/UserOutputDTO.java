@@ -1,7 +1,6 @@
-package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output;
+package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.response;
 
 
-import io.github.henriqueaguiiar.rinhaDeBackend.domain.util.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

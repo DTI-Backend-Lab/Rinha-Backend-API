@@ -1,7 +1,7 @@
 package io.github.henriqueaguiiar.rinhaDeBackend.domain.service.impl;
 
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input.PersonInputDTO;
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.PersonOutputDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.request.PersonInputDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.response.PersonOutputDTO;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.exception.PersonNotFoundException;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.mapper.PersonMapper;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Person;
@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
 /**

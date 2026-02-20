@@ -2,8 +2,8 @@ package io.github.henriqueaguiiar.rinhaDeBackend.domain.mapper;
 
 
 
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input.UserInputDTO;
-import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.output.UserOutputDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.request.UserInputDTO;
+import io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.response.UserOutputDTO;
 import io.github.henriqueaguiiar.rinhaDeBackend.domain.model.Users;
 import org.springframework.stereotype.Component;
 

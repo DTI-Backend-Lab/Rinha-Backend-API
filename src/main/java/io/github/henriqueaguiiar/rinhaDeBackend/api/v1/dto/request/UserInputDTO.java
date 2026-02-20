@@ -1,6 +1,6 @@
-package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.input;
+package io.github.henriqueaguiiar.rinhaDeBackend.api.v1.dto.request;
 
-import io.github.henriqueaguiiar.rinhaDeBackend.domain.util.UserRole;
+import io.github.henriqueaguiiar.rinhaDeBackend.domain.util.enums.UserRole;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
